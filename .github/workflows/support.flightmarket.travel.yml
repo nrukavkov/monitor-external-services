@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Check status page support.flightmarket.travel
       run: |
-        response=$(curl -s https://support.flightmarket.travel/api/v1/monitoring/health_check?token=${{ secrets.ZAMMAD_FLIGHTMARKET_TOKEN }})
+        response=$(curl -s https://support.flightmarket.travel/api/v1/monitoring/health_check?token=${{ secrets.ZAMMAD_TOKEN }})
         if [ $? -ne 0 ]; then
             echo "Error : Failed to fetch status page"
             exit 1
