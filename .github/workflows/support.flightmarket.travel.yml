@@ -1,0 +1,25 @@
+name: Check Status Page
+
+on:
+  schedule:
+    - cron: '* * * * *'
+
+jobs:
+  check_status:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check status page support.flightmarket.travel
+      run: |
+        response=$(curl -s https://support.flightmarket.travel/api/v1/monitoring/health_check?token=)
+        if [ $? -ne 0 ]; then
+            echo "Error : Failed to fetch status page"
+            exit 1
+        fi
+        healthy=$(echo $response | jq -r '.healthy')
+        if [ "$healthy" != "true" ]; then
+          echo "Error : Status page is not healthy"
+          exit 1
+        else
+          echo "Status page is healthy"
+        fi
