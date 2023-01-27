@@ -16,12 +16,16 @@ jobs:
       run: |
         response=$(curl -s https://${{ secrets.ZAMMAD_HOST }}/api/v1/monitoring/health_check?token=${{ secrets.ZAMMAD_TOKEN }})
         if [ $? -ne 0 ]; then
-            echo "Error : Failed to fetch status page"
+            ERROR_MSG="Error : Failed to fetch status page"
+            echo "$ERROR_MSG"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"$ERROR_MSG"}' ${{ secrets.$SLACK_WEBHOOK_URL }}
             exit 1
         fi
         healthy=$(echo $response | jq -r '.healthy')
         if [ "$healthy" != "true" ]; then
-          echo "Error : Status page is not healthy"
+          ERROR_MSG="Error : Status page of zammad flightmarket is not healthy"
+          echo "$ERROR_MSG"
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"$ERROR_MSG"}' ${{ secrets.$SLACK_WEBHOOK_URL }}
           exit 1
         else
           echo "Status page is healthy"
