@@ -9,9 +9,10 @@ on:
 jobs:
   check_status:
     runs-on: ubuntu-latest
+    environment: flightmarket
 
     steps:
-    - name: Check status page support.flightmarket.travel
+    - name: Check status page flightmarket
       run: |
         response=$(curl -s https://${{ secrets.ZAMMAD_HOST }}/api/v1/monitoring/health_check?token=${{ secrets.ZAMMAD_TOKEN }})
         if [ $? -ne 0 ]; then
