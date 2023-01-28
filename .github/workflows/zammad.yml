@@ -29,7 +29,7 @@ jobs:
             exit 1
         fi
         healthy=$(echo $response | jq -r '.healthy')
-        if [ "$healthy" != "false" ]; then
+        if [ "$healthy" != "true" ]; then
           post_to_slack "Error : Status page of zammad ${{ matrix.environment }} is not healthy"
           exit 1
         else
