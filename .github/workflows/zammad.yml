@@ -20,7 +20,7 @@ jobs:
         post_to_slack() {
           message=$1
           echo "$message"
-          curl -X POST -H 'Content-type: application/json' --data '{"channel": "#devops-duty", "username": "github_external_monitor", "text":"$message"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+          curl -X POST -H 'Content-type: application/json' --data "{\"channel\": \"#devops-duty\", \"username\": \"github_external_monitor\", \"text\":\"$message\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
         }
         
         response=$(curl -s https://${{ secrets.ZAMMAD_HOST }}/api/v1/monitoring/health_check?token=${{ secrets.ZAMMAD_TOKEN }})
