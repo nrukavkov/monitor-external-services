@@ -25,7 +25,7 @@ jobs:
             exit 1
         fi
         healthy=$(echo $response | jq -r '.healthy')
-        if [ "$healthy" != "true" ]; then
+        if [ "$healthy" != "false" ]; then
           ERROR_MSG="Error : Status page of zammad ${{ matrix.environment }} is not healthy"
           echo "$ERROR_MSG"
           curl -X POST -H 'Content-type: application/json' --data '{"text":"$ERROR_MSG"}' ${{ secrets.SLACK_WEBHOOK_URL }}
