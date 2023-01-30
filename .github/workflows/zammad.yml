@@ -30,7 +30,7 @@ jobs:
         fi
         healthy=$(echo $response | jq -r '.healthy')
         if [ "$healthy" != "true" ]; then
-          post_to_slack "Error : Status page of zammad ${{ matrix.environment }} is not healthy"
+          post_to_slack "Error : Status page of zammad ${{ matrix.environment }} is not healthy. Response: $response"
           exit 1
         else
           echo "Status page is healthy"
